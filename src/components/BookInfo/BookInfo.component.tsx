@@ -29,8 +29,8 @@ const BookInfo = ({
   }, [isLoading]);
 
   const onDeleteHandler = (bookId: string) => {
+    console.log(bookId);
     if (window.confirm('Are you sure')) {
-      console.log(bookId);
       deleteBook(bookId);
     }
   };

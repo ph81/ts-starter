@@ -16,8 +16,7 @@ export const bookSlice = createApi({
           body: book,
         };
       },
-
-      invalidatesTags: [{ type: 'Books', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Books' }],
     }),
     updateBook: builder.mutation<
       BookResponse,
@@ -30,13 +29,7 @@ export const bookSlice = createApi({
           body: book,
         };
       },
-      invalidatesTags: (result, error, { bookId }) =>
-        result
-          ? [
-              { type: 'Books', bookId },
-              { type: 'Books', bookId: 'LIST' },
-            ]
-          : [{ type: 'Books', bookId: 'LIST' }],
+      invalidatesTags: [{ type: 'Books' }],
     }),
     getBook: builder.query<BookResponse, string>({
       query(bookId) {
@@ -45,26 +38,17 @@ export const bookSlice = createApi({
           url: `/books/${bookId}`,
         };
       },
-      providesTags: (result, error, bookId) => [{ type: 'Books', bookId }],
+      providesTags: [{ type: 'Books' }],
     }),
     getAllBooks: builder.query<BookState[], { page: number }>({
       query({ page }) {
         return {
           url: `/books/?page=${page}`,
+          //credentials: 'include',
         };
       },
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ bookId }) => ({
-                type: 'Books' as const,
-                bookId,
-              })),
-              { type: 'Books', bookId: 'LIST' },
-            ]
-          : [{ type: 'Books', bookId: 'LIST' }],
-
-      //keepUnusedDataFor: 5,
+      providesTags: [{ type: 'Books' }],
+      keepUnusedDataFor: 5,
     }),
     deleteBook: builder.mutation<BookResponse, string>({
       query(bookId) {
