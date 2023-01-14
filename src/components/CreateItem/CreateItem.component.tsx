@@ -21,7 +21,7 @@ const CreateItem = (): JSX.Element => {
     };
     createBook(data);
     clearInputs();
-    navigate.push('/', { replace: true });
+    navigate.push('/');
   };
 
   const clearInputs = () => {
