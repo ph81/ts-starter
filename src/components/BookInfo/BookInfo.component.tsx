@@ -1,24 +1,42 @@
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, Heading, IconButton, Text } from '@chakra-ui/react';
-import { useAppDispatch } from '../../hooks';
-import { deleteBook } from '../../redux/bookSlice';
-import { useNavigate } from 'react-router-dom';
+import { useDeleteBookMutation } from '../../redux/bookSlice';
+import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const BookInfo = ({
   title,
   author,
-  id,
+  bookId,
   ...rest
 }: {
   title: string | undefined;
   author: string | undefined;
-  id: string;
+  bookId: string;
 }) => {
-  const dispatch = useAppDispatch();
-  const history = useNavigate();
+  const [deleteBook, { isLoading, isError, isSuccess }] =
+    useDeleteBookMutation();
+  const history = useHistory();
 
-  const redirect = (id: string) => {
-    history(`/update-book/${id}`);
+  useEffect(() => {
+    if (isSuccess) {
+      alert('Note deleted successfully');
+    }
+
+    if (isError) {
+      alert('error');
+    }
+  }, [isLoading]);
+
+  const onDeleteHandler = (bookId: string) => {
+    if (window.confirm('Are you sure')) {
+      console.log(bookId);
+      deleteBook(bookId);
+    }
+  };
+
+  const redirect = (bookId: string) => {
+    history.push(`/update-book/${bookId}`);
   };
 
   return (
@@ -40,13 +58,13 @@ const BookInfo = ({
           aria-label=""
           icon={<DeleteIcon />}
           marginRight="1rem"
-          onClick={() => dispatch(deleteBook({ id }))}
+          onClick={() => onDeleteHandler(bookId)}
         />
         <IconButton
           color="#1a202c"
           aria-label=""
           icon={<EditIcon />}
-          onClick={() => redirect(id)}
+          onClick={() => redirect(bookId)}
         />
       </Box>
     </Box>
