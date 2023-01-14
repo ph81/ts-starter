@@ -5,7 +5,7 @@ const BASEURL = 'https://book-api-black.vercel.app/api';
 
 export const bookSlice = createApi({
   reducerPath: 'bookAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: BASEURL, mode: 'cors' }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASEURL }),
   tagTypes: ['Books'],
   endpoints: (builder) => ({
     createBook: builder.mutation<BookResponse, BookState>({
