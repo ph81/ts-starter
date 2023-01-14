@@ -1,5 +1,26 @@
 export type BookState = {
-  id: string;
+  bookId: string;
   title?: string;
   author?: string;
+};
+
+export type MutateBook = {
+  title?: string;
+  author?: string;
+};
+
+export type IGenericResponse = {
+  status: string;
+  message: string;
+};
+
+export type BookResponse = {
+  status: string;
+  Book: BookState;
+};
+
+export type BooksResponse = {
+  status: string;
+  results: number;
+  Books: BookState[];
 };

@@ -1,20 +1,21 @@
 import { Box, Button, Flex, Heading, Stack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import BookInfo from '../../components/BookInfo';
-import { fetchBooks } from '../../redux/bookSlice';
-import { useEffect } from 'react';
+import { useGetAllBooksQuery } from '../../redux/bookSlice';
 
-const BookList = () => {
-  const bookList = useAppSelector((state) => state.book.bookList);
-  const dispatch = useAppDispatch();
+const BookList = (): JSX.Element => {
+  const {
+    //isLoading,
+    //isFetching,
+    //isError,
+    isSuccess,
+    data: bookList,
+  } = useGetAllBooksQuery(
+    { page: 1 },
+    { refetchOnFocus: true, refetchOnReconnect: true }
+  );
+
   console.log(bookList);
-
-  useEffect(() => {
-    if (bookList.length === 0) {
-      dispatch(fetchBooks());
-    }
-  }, [dispatch]);
 
   return (
     <Flex
@@ -32,20 +33,21 @@ const BookList = () => {
           marginBottom="10px"
         >
           <Heading color="white">Book List</Heading>
-          <Link to="/new-book">
+          <Link to={'/new-book'}>
             <Button paddingX="3rem">Add</Button>
           </Link>
         </Box>
         <Box rounded="md" bg="purple.500" color="white" px="15px" py="15px">
           <Stack spacing={8}>
-            {bookList.map((book) => (
-              <BookInfo
-                key={book.id}
-                title={book.title}
-                author={book.author}
-                id={book.id}
-              />
-            ))}
+            {isSuccess &&
+              bookList.map((book) => (
+                <BookInfo
+                  key={book.bookId}
+                  title={book.title}
+                  author={book.author}
+                  bookId={book.bookId}
+                />
+              ))}
           </Stack>
         </Box>
       </Box>
