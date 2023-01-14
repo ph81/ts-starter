@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { MutateBook, BookState, BookResponse } from './types';
 
-const BASEURL = 'http://book-api-black.vercel.app/api';
+const BASEURL = 'https://book-api-black.vercel.app/api';
 
 export const bookSlice = createApi({
   reducerPath: 'bookAPI',
