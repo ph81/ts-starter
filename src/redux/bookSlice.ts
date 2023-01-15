@@ -1,11 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { MutateBook, BookState, BookResponse } from './types';
 
-const BASEURL = 'https://book-api-black.vercel.app/api';
+const BASEURL = 'https://book-api-black.vercel.app/api/';
 
 export const bookSlice = createApi({
   reducerPath: 'bookAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: BASEURL, mode: 'cors' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASEURL,
+    mode: 'cors',
+  }),
   tagTypes: ['Books'],
   endpoints: (builder) => ({
     createBook: builder.mutation<BookResponse, BookState>({
@@ -33,7 +36,6 @@ export const bookSlice = createApi({
     }),
     getBook: builder.query<BookResponse, string>({
       query(bookId) {
-        console.log('builder:' + bookId);
         return {
           url: `/books/${bookId}`,
         };
@@ -44,7 +46,6 @@ export const bookSlice = createApi({
       query({ page }) {
         return {
           url: `/books/?page=${page}`,
-          //credentials: 'include',
         };
       },
       providesTags: [{ type: 'Books' }],
