@@ -30,7 +30,7 @@ const UpdateItem = (): JSX.Element => {
     };
     updateBook({ bookId, book });
     clearInputs();
-    navigate.push('/', { replace: true });
+    navigate.push('/');
   };
 
   const clearInputs = () => {
@@ -59,7 +59,6 @@ const UpdateItem = (): JSX.Element => {
           <Input
             value={title}
             color="white"
-            //placeholder="The Lord of the Rings"
             onChange={(e) => setTitle(e.currentTarget.value)}
           />
           <FormLabel color="white" marginTop={4}>
@@ -68,7 +67,6 @@ const UpdateItem = (): JSX.Element => {
           <Input
             value={author}
             color="white"
-            //placeholder="J.R.R Tolkien"
             onChange={(e) => setAuthor(e.currentTarget.value)}
           />
           <Button

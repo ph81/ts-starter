@@ -6,10 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 const CreateItem = (): JSX.Element => {
   const navigate = useHistory();
-
   const [title, setTitle] = useState<string | undefined>('');
   const [author, setAuthor] = useState<string | undefined>('');
-
   const [createBook, { isLoading, isError, isSuccess }] =
     useCreateBookMutation();
 
