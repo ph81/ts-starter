@@ -1,5 +1,5 @@
-import { Button, Flex, Box, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { Button, Flex, Box, Text } from '@chakra-ui/react';
 
 const Navbar = () => {
   return (
@@ -26,9 +26,9 @@ const Navbar = () => {
             letterSpacing="0.65px"
           >
             <Text fontSize={['xl', '2xl', '2xl', '2xl']} mr={2}>
-              🦉
+              🗄️
             </Text>
-            Library App
+            User Directory
           </Button>
         </Link>
       </Box>
@@ -43,10 +43,10 @@ const Navbar = () => {
             p={[1, 4]}
             color="white"
           >
-            List Books
+            Users
           </Button>
         </Link>
-        <Link to="/new-book">
+        <Link to="/new-user">
           <Button
             fontWeight={['medium', 'medium', 'medium']}
             fontSize={['xs', 'sm', 'lg', 'xl']}
@@ -55,7 +55,7 @@ const Navbar = () => {
             p={[1, 4]}
             color="white"
           >
-            Add Book
+            Add User
           </Button>
         </Link>
       </Box>

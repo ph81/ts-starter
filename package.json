@@ -1,5 +1,5 @@
 {
-  "name": "vite-keep-ts",
+  "name": "ts-users",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -19,9 +19,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@reduxjs/toolkit": "^1.9.1",
-    "axios": "^1.2.2",
     "eslint-plugin-eslint-comments": "^3.2.0",
-    "framer-motion": "^8.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",

@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { bookSlice } from './bookSlice';
+import { userSlice } from './userSlice';
 
 export const store = configureStore({
   reducer: {
-    [bookSlice.reducerPath]: bookSlice.reducer,
+    [userSlice.reducerPath]: userSlice.reducer,
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([bookSlice.middleware]),
+    getDefaultMiddleware({}).concat([userSlice.middleware]),
 });
 
 setupListeners(store.dispatch);

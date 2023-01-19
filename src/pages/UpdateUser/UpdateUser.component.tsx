@@ -1,7 +1,7 @@
 import UpdateItem from '../../components/UpdateItem';
 
-const UpdateBook = (): JSX.Element => {
+const UpdateUser = (): JSX.Element => {
   return <UpdateItem />;
 };
 
-export default UpdateBook;
+export default UpdateUser;
