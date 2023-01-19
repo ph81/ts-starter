@@ -1,47 +1,58 @@
-import { Box, Button, Flex, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import {
-  useGetAllBooksQuery,
-  useUpdateBookMutation,
-} from '../../redux/bookSlice';
+  useGetAllUsersQuery,
+  useUpdateUserMutation,
+} from '../../redux/userSlice';
 import { useHistory, useParams } from 'react-router-dom';
+import Loading from '../Loading';
+import Error from '../Error';
+import { Box, Button, Flex, FormLabel, Heading, Input } from '@chakra-ui/react';
 
 const UpdateItem = (): JSX.Element => {
   const navigate = useHistory();
-  const { bookId } = useParams<{ bookId: string }>();
+  const { userId } = useParams<{ userId: string }>();
 
-  const { data: booklist, isLoading } = useGetAllBooksQuery(
+  const { data: users, isFetching } = useGetAllUsersQuery(
     { page: 1 },
     { refetchOnFocus: true, refetchOnReconnect: true }
   );
 
-  const itemToEdit = booklist?.find((book) => book.bookId === bookId);
-  const [title, setTitle] = useState<string | undefined>(itemToEdit?.title);
-  const [author, setAuthor] = useState<string | undefined>(itemToEdit?.author);
-  console.log(itemToEdit);
-  console.log(isLoading ? 'data:' : booklist);
-
-  const [updateBook] = useUpdateBookMutation();
+  const itemToEdit = users?.find((user) => user.userId === userId);
+  const [name, setName] = useState<string | undefined>(itemToEdit?.name);
+  const [email, setEmail] = useState<string | undefined>(itemToEdit?.email);
+  const [avatar, setAvatar] = useState<string | undefined>(itemToEdit?.avatar);
+  const [updateUser, { isLoading, isError }] = useUpdateUserMutation();
+  const loading = isFetching || isLoading;
 
   const handleOnSubmit = () => {
-    const book = {
-      title,
-      author,
+    const user = {
+      name,
+      email,
+      avatar,
     };
-    updateBook({ bookId, book });
+    updateUser({ userId, user });
     clearInputs();
     navigate.push('/');
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <Error />;
+  }
+
   const clearInputs = () => {
-    setTitle('');
-    setAuthor('');
+    setName('');
+    setEmail('');
+    setAvatar('');
   };
 
   return (
     <>
       <Flex
-        height="100vh"
+        height="50vh"
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
@@ -53,21 +64,29 @@ const UpdateItem = (): JSX.Element => {
             justifyContent="space-between"
             marginBottom="20px"
           >
-            <Heading color="white">Update Book</Heading>
+            <Heading color="white">Add User</Heading>
           </Box>
-          <FormLabel color="white">Title</FormLabel>
+          <FormLabel color="white">Name</FormLabel>
           <Input
-            value={title}
+            value={name}
             color="white"
-            onChange={(e) => setTitle(e.currentTarget.value)}
+            onChange={(e) => setName(e.currentTarget.value)}
           />
           <FormLabel color="white" marginTop={4}>
-            Author
+            Email
           </FormLabel>
           <Input
-            value={author}
+            value={email}
             color="white"
-            onChange={(e) => setAuthor(e.currentTarget.value)}
+            onChange={(e) => setEmail(e.currentTarget.value)}
+          />
+          <FormLabel color="white" marginTop={4}>
+            Avatar
+          </FormLabel>
+          <Input
+            value={avatar}
+            color="white"
+            onChange={(e) => setAvatar(e.currentTarget.value)}
           />
           <Button
             marginTop={4}

@@ -1,12 +1,14 @@
-export type BookState = {
-  bookId: string;
-  title?: string;
-  author?: string;
+export type UserState = {
+  userId: string;
+  name?: string;
+  email?: string;
+  avatar?: string;
 };
 
-export type MutateBook = {
-  title?: string;
-  author?: string;
+export type MutateUser = {
+  name?: string;
+  email?: string;
+  avatar?: string;
 };
 
 export type IGenericResponse = {
@@ -14,13 +16,13 @@ export type IGenericResponse = {
   message: string;
 };
 
-export type BookResponse = {
+export type UserResponse = {
   status: string;
-  Book: BookState;
+  User: UserState;
 };
 
-export type BooksResponse = {
+export type UsersResponse = {
   status: string;
   results: number;
-  Books: BookState[];
+  Users: UserState[];
 };

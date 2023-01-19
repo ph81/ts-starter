@@ -1,41 +1,48 @@
-import { Box, Button, Flex, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useCreateBookMutation } from '../../redux/bookSlice';
+import { useCreateUserMutation } from '../../redux/userSlice';
 import { useHistory } from 'react-router-dom';
+import Error from '../Error';
+import Loading from '../Loading';
 import { v4 as uuidv4 } from 'uuid';
+import { Box, Button, Flex, FormLabel, Heading, Input } from '@chakra-ui/react';
 
 const CreateItem = (): JSX.Element => {
   const navigate = useHistory();
-  const [title, setTitle] = useState<string | undefined>('');
-  const [author, setAuthor] = useState<string | undefined>('');
-  const [createBook, { isLoading, isError, isSuccess }] =
-    useCreateBookMutation();
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string | undefined>('');
+  const [avatar, setAvatar] = useState<string | undefined>('');
+  const [createUser, { isLoading, isError }] = useCreateUserMutation();
 
   const handleOnSubmit = () => {
     const data = {
-      bookId: uuidv4(),
-      author,
-      title,
+      userId: uuidv4(),
+      name,
+      email,
+      avatar,
     };
-    createBook(data);
+    createUser(data);
     clearInputs();
     navigate.push('/');
   };
 
   const clearInputs = () => {
-    setTitle('');
-    setAuthor('');
+    setName('');
+    setEmail('');
+    setAvatar('');
   };
 
-  const loading = isLoading;
-  if (loading) return <h3>loading...</h3>;
-  if (isError) return <h3>error!</h3>;
-  if (isSuccess) return <h3>success!</h3>;
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <Error />;
+  }
 
   return (
     <>
       <Flex
-        height="100vh"
+        height="50vh"
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
@@ -47,23 +54,32 @@ const CreateItem = (): JSX.Element => {
             justifyContent="space-between"
             marginBottom="20px"
           >
-            <Heading color="white">Add Book</Heading>
+            <Heading color="white">Add User</Heading>
           </Box>
-          <FormLabel color="white">Title</FormLabel>
+          <FormLabel color="white">Name</FormLabel>
           <Input
-            value={title}
+            value={name}
             color="white"
-            placeholder="The Lord of the Rings"
-            onChange={(e) => setTitle(e.currentTarget.value)}
+            placeholder="Sarah Manning"
+            onChange={(e) => setName(e.currentTarget.value)}
           />
           <FormLabel color="white" marginTop={4}>
-            Author
+            Email
           </FormLabel>
           <Input
-            value={author}
+            value={email}
             color="white"
-            placeholder="J.R.R Tolkien"
-            onChange={(e) => setAuthor(e.currentTarget.value)}
+            placeholder="sarah.manning@ob.org"
+            onChange={(e) => setEmail(e.currentTarget.value)}
+          />
+          <FormLabel color="white" marginTop={4}>
+            Avatar
+          </FormLabel>
+          <Input
+            value={avatar}
+            color="white"
+            placeholder="image url"
+            onChange={(e) => setAvatar(e.currentTarget.value)}
           />
           <Button
             marginTop={4}

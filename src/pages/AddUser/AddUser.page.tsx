@@ -1,10 +1,10 @@
 import CreateItem from '../../components/CreateItem';
 
-const AddBook = (): JSX.Element => {
+const AddUser = (): JSX.Element => {
   return (
     <>
       <CreateItem />
     </>
   );
 };
-export default AddBook;
+export default AddUser;
