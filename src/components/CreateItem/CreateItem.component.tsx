@@ -1,34 +1,47 @@
-import { useState } from 'react';
 import { useCreateUserMutation } from '../../redux/userSlice';
 import { useHistory } from 'react-router-dom';
+import { Form, Formik } from 'formik';
+import validationSchema from '../../utils/validationSchema';
+import { v4 as uuidv4 } from 'uuid';
 import Error from '../Error';
 import Loading from '../Loading';
-import { v4 as uuidv4 } from 'uuid';
-import { Box, Button, Flex, FormLabel, Heading, Input } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  FormLabel,
+  Heading,
+  Input,
+  Alert,
+  AlertTitle,
+} from '@chakra-ui/react';
+
+interface FormValues {
+  name: string;
+  email: string;
+  avatar: string;
+}
 
 const CreateItem = (): JSX.Element => {
   const navigate = useHistory();
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string | undefined>('');
-  const [avatar, setAvatar] = useState<string | undefined>('');
   const [createUser, { isLoading, isError }] = useCreateUserMutation();
 
-  const handleOnSubmit = () => {
-    const data = {
-      userId: uuidv4(),
-      name,
-      email,
-      avatar,
-    };
-    createUser(data);
-    clearInputs();
-    navigate.push('/');
+  const initialValues: FormValues = {
+    name: '',
+    email: '',
+    avatar: '',
   };
 
-  const clearInputs = () => {
-    setName('');
-    setEmail('');
-    setAvatar('');
+  const onSubmit = (values: FormValues) => {
+    const data = {
+      userId: uuidv4(),
+      name: values.name,
+      email: values.email,
+      avatar: values.avatar,
+    };
+    //alert(JSON.stringify(data, null, 2));
+    createUser(data);
+    navigate.push('/');
   };
 
   if (isLoading) {
@@ -56,39 +69,83 @@ const CreateItem = (): JSX.Element => {
           >
             <Heading color="white">Add User</Heading>
           </Box>
-          <FormLabel color="white">Name</FormLabel>
-          <Input
-            value={name}
-            color="white"
-            placeholder="Sarah Manning"
-            onChange={(e) => setName(e.currentTarget.value)}
-          />
-          <FormLabel color="white" marginTop={4}>
-            Email
-          </FormLabel>
-          <Input
-            value={email}
-            color="white"
-            placeholder="sarah.manning@ob.org"
-            onChange={(e) => setEmail(e.currentTarget.value)}
-          />
-          <FormLabel color="white" marginTop={4}>
-            Avatar
-          </FormLabel>
-          <Input
-            value={avatar}
-            color="white"
-            placeholder="image url"
-            onChange={(e) => setAvatar(e.currentTarget.value)}
-          />
-          <Button
-            marginTop={4}
-            colorScheme="teal"
-            type="submit"
-            onClick={handleOnSubmit}
+          <Formik
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}
           >
-            Submit
-          </Button>
+            {(formik) => {
+              const {
+                values,
+                handleChange,
+                handleSubmit,
+                errors,
+                touched,
+                handleBlur,
+                isValid,
+                dirty,
+              } = formik;
+              return (
+                <Form onSubmit={handleSubmit}>
+                  <FormLabel color="white">Name</FormLabel>
+                  <Input
+                    id="name"
+                    value={values.name}
+                    color="white"
+                    placeholder="Sarah Manning"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.name && touched.name && (
+                    <Alert status="error" mt={4}>
+                      <AlertTitle>{errors.name}</AlertTitle>
+                    </Alert>
+                  )}
+                  <FormLabel color="white" marginTop={4}>
+                    Email
+                  </FormLabel>
+                  <Input
+                    id="email"
+                    value={values.email}
+                    color="white"
+                    placeholder="sarah.manning@ob.org"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.email && touched.email && (
+                    <Alert status="error" mt={4}>
+                      <AlertTitle>{errors.email}</AlertTitle>
+                    </Alert>
+                  )}
+                  <FormLabel color="white" marginTop={4}>
+                    Avatar
+                  </FormLabel>
+                  <Input
+                    id="avatar"
+                    value={values.avatar}
+                    color="white"
+                    placeholder="image url"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.avatar && touched.avatar && (
+                    <Alert status="error" mt={4}>
+                      <AlertTitle>{errors.avatar}</AlertTitle>
+                    </Alert>
+                  )}
+                  <Button
+                    marginTop={4}
+                    colorScheme="teal"
+                    type="submit"
+                    className={dirty && isValid ? '' : 'disabled-btn'}
+                    disabled={!(dirty && isValid)}
+                  >
+                    Submit
+                  </Button>
+                </Form>
+              );
+            }}
+          </Formik>
         </Box>
       </Flex>
     </>

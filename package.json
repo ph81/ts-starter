@@ -1,7 +1,7 @@
 {
   "name": "ts-users",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -20,11 +20,13 @@
     "@emotion/styled": "^11.10.5",
     "@reduxjs/toolkit": "^1.9.1",
     "eslint-plugin-eslint-comments": "^3.2.0",
+    "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.4",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
