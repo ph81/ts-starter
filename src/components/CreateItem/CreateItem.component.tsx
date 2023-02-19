@@ -1,5 +1,6 @@
 import { useCreateUserMutation } from '../../redux/userSlice';
 import { useHistory } from 'react-router-dom';
+import { useId } from 'react';
 import { Form, Formik } from 'formik';
 import validationSchema from '../../utils/validationSchema';
 import { v4 as uuidv4 } from 'uuid';
@@ -44,6 +45,11 @@ const CreateItem = (): JSX.Element => {
     navigate.push('/');
   };
 
+  const id = useId();
+  const nameId = `${id}-name`;
+  const emailId = `${id}-email`;
+  const avatarId = `${id}-avatar`;
+
   if (isLoading) {
     return <Loading />;
   }
@@ -87,7 +93,9 @@ const CreateItem = (): JSX.Element => {
               } = formik;
               return (
                 <Form onSubmit={handleSubmit}>
-                  <FormLabel color="white">Name</FormLabel>
+                  <FormLabel color="white" htmlFor={nameId}>
+                    Name
+                  </FormLabel>
                   <Input
                     id="name"
                     value={values.name}
@@ -101,7 +109,7 @@ const CreateItem = (): JSX.Element => {
                       <AlertTitle>{errors.name}</AlertTitle>
                     </Alert>
                   )}
-                  <FormLabel color="white" marginTop={4}>
+                  <FormLabel color="white" htmlFor={emailId} marginTop={4}>
                     Email
                   </FormLabel>
                   <Input
@@ -117,7 +125,7 @@ const CreateItem = (): JSX.Element => {
                       <AlertTitle>{errors.email}</AlertTitle>
                     </Alert>
                   )}
-                  <FormLabel color="white" marginTop={4}>
+                  <FormLabel color="white" htmlFor={avatarId} marginTop={4}>
                     Avatar
                   </FormLabel>
                   <Input
