@@ -3,6 +3,7 @@ import {
   useUpdateUserMutation,
 } from '../../redux/userSlice';
 import { useHistory, useParams } from 'react-router-dom';
+import { useId } from 'react';
 import { Form, Formik } from 'formik';
 import validationSchema from '../../utils/validationSchema';
 import Loading from '../Loading';
@@ -28,10 +29,7 @@ const UpdateItem = (): JSX.Element => {
   const navigate = useHistory();
   const { userId } = useParams<{ userId: string }>();
 
-  const { data: users, isFetching } = useGetAllUsersQuery(
-    { page: 1 },
-    { refetchOnFocus: true, refetchOnReconnect: true }
-  );
+  const { data: users, isFetching } = useGetAllUsersQuery({ page: 1 });
 
   const itemToEdit = users?.find((user) => user.userId === userId);
   const initialValues: EditValues = {
@@ -48,10 +46,14 @@ const UpdateItem = (): JSX.Element => {
       email: values.email,
       avatar: values.avatar,
     };
-    //alert(JSON.stringify(user, null, 2));
     updateUser({ userId, user });
     navigate.push('/');
   };
+
+  const id = useId();
+  const nameId = `${id}-name`;
+  const emailId = `${id}-email`;
+  const avatarId = `${id}-avatar`;
 
   if (loading) {
     return <Loading />;
@@ -95,7 +97,9 @@ const UpdateItem = (): JSX.Element => {
               } = formik;
               return (
                 <Form onSubmit={handleSubmit}>
-                  <FormLabel color="white">Name</FormLabel>
+                  <FormLabel color="white" htmlFor={nameId}>
+                    Name
+                  </FormLabel>
                   <Input
                     id="name"
                     value={values.name}
@@ -108,7 +112,7 @@ const UpdateItem = (): JSX.Element => {
                       <AlertTitle>{errors.name}</AlertTitle>
                     </Alert>
                   )}
-                  <FormLabel color="white" marginTop={4}>
+                  <FormLabel color="white" htmlFor={emailId} marginTop={4}>
                     Email
                   </FormLabel>
                   <Input
@@ -123,7 +127,7 @@ const UpdateItem = (): JSX.Element => {
                       <AlertTitle>{errors.email}</AlertTitle>
                     </Alert>
                   )}
-                  <FormLabel color="white" marginTop={4}>
+                  <FormLabel color="white" htmlFor={avatarId} marginTop={4}>
                     Avatar
                   </FormLabel>
                   <Input
