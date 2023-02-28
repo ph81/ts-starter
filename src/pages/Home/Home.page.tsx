@@ -1,9 +1,7 @@
-import ItemList from '../../components/ItemList';
-
 const Home = (): JSX.Element => {
   return (
     <>
-      <ItemList />
+      <h1>React Starter Typescript version</h1>
     </>
   );
 };

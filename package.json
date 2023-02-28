@@ -1,5 +1,5 @@
 {
-  "name": "ts-users",
+  "name": "ts-starter",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -14,17 +14,13 @@
     "verify": "npm run lint && npm run stylelint "
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.15",
-    "@chakra-ui/react": "^2.4.6",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@reduxjs/toolkit": "^1.9.1",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.4",
+    "styled-components": "^5.3.6",
     "uuid": "^9.0.0",
     "yup": "^0.32.11"
   },
@@ -32,9 +28,8 @@
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
-    "@types/react-redux": "^7.1.25",
     "@types/react-router-dom": "^5.3.3",
-    "@types/uuid": "^9.0.0",
+    "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "@vitejs/plugin-react": "^2.1.0",

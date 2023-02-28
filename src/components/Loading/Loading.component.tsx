@@ -1,4 +1,4 @@
-import { Spinner } from '@chakra-ui/react';
+import { Spinner } from './Loading.styles';
 
 const Loading = (): JSX.Element => {
   return <Spinner />;
